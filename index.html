@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambil Video</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Download Video from YouTube, Facebook, Instagram & TikTok</h1>
+            <p>Masukkan URL video yang ingin Anda download</p>
+        </header>
+
+        <div class="download-form">
+            <input type="text" id="videoUrl" placeholder="Masukkan URL Video..." oninput="detectPlatform()" />
+            <button id="downloadBtn" onclick="startDownload()" disabled>Ambil Video</button>
+        </div>
+
+        <div class="platform-info" id="platformInfo">
+            <p><strong>Sumber Terdeteksi:</strong> <span id="platformName">Otomatis</span></p>
+        </div>
+
+        <div class="download-details" id="downloadDetails" style="display: none;">
+            <h3>Informasi Video</h3>
+            <div class="thumbnail">
+                <img id="videoThumbnail" src="" alt="Video Thumbnail">
+            </div>
+            <p id="videoTitle">Judul Video akan muncul di sini</p>
+            <a id="downloadLink" href="#" class="btn" download>Download Now</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
