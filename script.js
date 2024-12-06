@@ -1,49 +1,40 @@
-function detectPlatform() {
-    const urlInput = document.getElementById('videoUrl').value;
-    const platformInfo = document.getElementById('platformInfo');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const platformName = document.getElementById('platformName');
+document.getElementById('downloadForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Mencegah form submit secara default
 
-    const youtubePattern = /youtube.com|youtu.be/;
-    const facebookPattern = /facebook.com/;
-    const instagramPattern = /instagram.com/;
-    const tiktokPattern = /tiktok.com/;
+    const url = document.getElementById('url').value;
+    const errorMessage = document.getElementById('error-message');
 
-    // Detect platform
-    if (youtubePattern.test(urlInput)) {
-        platformName.textContent = 'YouTube';
-        platformInfo.style.display = 'block';
-        downloadBtn.disabled = false;
-    } else if (facebookPattern.test(urlInput)) {
-        platformName.textContent = 'Facebook';
-        platformInfo.style.display = 'block';
-        downloadBtn.disabled = false;
-    } else if (instagramPattern.test(urlInput)) {
-        platformName.textContent = 'Instagram';
-        platformInfo.style.display = 'block';
-        downloadBtn.disabled = false;
-    } else if (tiktokPattern.test(urlInput)) {
-        platformName.textContent = 'TikTok';
-        platformInfo.style.display = 'block';
-        downloadBtn.disabled = false;
-    } else {
-        platformInfo.style.display = 'none';
-        downloadBtn.disabled = true;
+    // Validasi URL menggunakan regex yang mendukung YouTube, Facebook, Instagram, TikTok
+    const urlRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|facebook\.com|instagram\.com|tiktok\.com)\/.+$/;
+
+    if (!urlRegex.test(url)) {
+        errorMessage.textContent = 'URL tidak valid. Pastikan URL berasal dari YouTube, Facebook, Instagram, atau TikTok.';
+        errorMessage.style.color = 'red';
+        return;
     }
-}
 
-function startDownload() {
-    const urlInput = document.getElementById('videoUrl').value;
-    const downloadDetails = document.getElementById('downloadDetails');
-    const downloadLink = document.getElementById('downloadLink');
-    const videoThumbnail = document.getElementById('videoThumbnail');
-    const videoTitle = document.getElementById('videoTitle');
+    errorMessage.textContent = ''; // Kosongkan pesan error jika validasi sukses
 
-    // Simulating the video data (replace with real API call to fetch video details)
-    videoThumbnail.src = 'https://via.placeholder.com/200'; // Example image
-    videoTitle.textContent = 'Sample Video Title'; // Example title
-    downloadLink.href = urlInput; // Direct URL for download (replace with actual link)
-    
-    // Display download section
-    downloadDetails.style.display = 'block';
-}
+    // Kirim data URL ke server
+    fetch('/download', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `url=${encodeURIComponent(url)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Menampilkan pesan berdasarkan hasil dari server
+        if (data.includes("Terjadi kesalahan")) {
+            errorMessage.textContent = 'Terjadi kesalahan saat mengunduh video.';
+            errorMessage.style.color = 'red';
+        } else {
+            alert('Video berhasil diunduh!');
+        }
+    })
+    .catch(error => {
+        errorMessage.textContent = 'Terjadi kesalahan pada server.';
+        errorMessage.style.color = 'red';
+    });
+});

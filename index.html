@@ -1,37 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ambil Video</title>
+    <meta name="description" content="Unduh video dari YouTube, Facebook, Instagram, dan TikTok dengan mudah">
+    <meta name="keywords" content="download, youtube, facebook, instagram, tiktok, video downloader">
+    <meta name="author" content="Website Video Downloader">
+    <title>Download Video - YouTube, Facebook, Instagram, TikTok</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Download Video from YouTube, Facebook, Instagram & TikTok</h1>
-            <p>Masukkan URL video yang ingin Anda download</p>
-        </header>
-
-        <div class="download-form">
-            <input type="text" id="videoUrl" placeholder="Masukkan URL Video..." oninput="detectPlatform()" />
-            <button id="downloadBtn" onclick="startDownload()" disabled>Ambil Video</button>
-        </div>
-
-        <div class="platform-info" id="platformInfo">
-            <p><strong>Sumber Terdeteksi:</strong> <span id="platformName">Otomatis</span></p>
-        </div>
-
-        <div class="download-details" id="downloadDetails" style="display: none;">
-            <h3>Informasi Video</h3>
-            <div class="thumbnail">
-                <img id="videoThumbnail" src="" alt="Video Thumbnail">
-            </div>
-            <p id="videoTitle">Judul Video akan muncul di sini</p>
-            <a id="downloadLink" href="#" class="btn" download>Download Now</a>
-        </div>
+        <h1>Unduh Video dari YouTube, Facebook, Instagram, dan TikTok</h1>
+        <form id="downloadForm" action="/download" method="POST">
+            <label for="url">Masukkan URL Video:</label>
+            <input type="text" id="url" name="url" placeholder="Masukkan URL Video" required>
+            <button type="submit">Download Video</button>
+        </form>
+        <p id="error-message"></p>
+        <p><small>Masukkan URL video yang valid dari YouTube, Facebook, Instagram, atau TikTok.</small></p>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
